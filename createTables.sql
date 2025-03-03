@@ -1,0 +1,30 @@
+-- Tabela: Statusy
+CREATE TABLE Statusy (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Opis VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Tabela: Maszyny
+CREATE TABLE Maszyny (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nazwa VARCHAR(100) NOT NULL,
+    Typ VARCHAR(50) NOT NULL,
+    Status INT NOT NULL,
+    Rozmiar VARCHAR(50),
+    Model VARCHAR(50),
+    FOREIGN KEY (Status) REFERENCES Statusy(ID)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+);
+
+-- Tabela: DziennikOperacji
+CREATE TABLE DziennikOperacji (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    DataGodzina DATETIME DEFAULT CURRENT_TIMESTAMP,
+    TypOperacji VARCHAR(50) NOT NULL,
+    Opis TEXT,
+    MaszynaID INT,
+    FOREIGN KEY (MaszynaID) REFERENCES Maszyny(ID)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+);
